@@ -342,7 +342,8 @@ class CarPrice:
             ad['msrp.pred'] = suggestion
             ad['msrp'] = y_test_orig[i]
             q.append(ad)
-        print(q)
+            s = pd.DataFrame(q)
+        print(s.head(5).to_markdown())
         
 
 predict_car_price = CarPrice()
