@@ -25,6 +25,7 @@ def save_fig(fig_id, tight_layout=True):
     
 
 def random_digit():
+    global some_digit
     some_digit = X[36000]
     some_digit_image = some_digit.reshape(28, 28)
     plt.imshow(some_digit_image, cmap = mpl.cm.binary,
@@ -73,16 +74,18 @@ def train_predict(some_digit):
     sgd_clf.fit(X_train,y_train_5)
     y_pred = sgd_clf.predict(X_test)
     # print prediction result of the given input some_digit
-    
+    pred_some_digit = sgd_clf.predict([some_digit])
+    print("The prediction result of some_digit is:", pred_some_digit)
+    print("The actual value of some_digit is", y[36000])
     
 def calculate_cross_val_score():
-    global X,y,y_pred,y_test_5,sgd_clf
+    global X,y,y_pred,y_test_5,sgd_clf,some_digit
     load_and_sort()
     random_digit()
-    train_predict(5)
+    train_predict(some_digit)
     from sklearn.metrics import accuracy_score
-    print("Accuracy:",accuracy_score(y_pred,y_test_5))
+    print("Accuracy of test data:",accuracy_score(y_pred,y_test_5))
     from sklearn.model_selection import cross_val_score
-    print("Cross Validation Score:", cross_val_score(sgd_clf,X,y))
+    print("Cross Validation Score of test data:", cross_val_score(sgd_clf,X,y))
 
 calculate_cross_val_score()
